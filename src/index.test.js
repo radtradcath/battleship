@@ -1,7 +1,5 @@
-import sum from ".";
+import { sum } from "."
 
-describe("only testing", () => {
-  test("jest working?", () => {
-    expect(sum(8, 1)).toBe(9);
-  });
-});
+test('one test', () => {
+    expect(sum(8, 1)).toBe(9)
+})
