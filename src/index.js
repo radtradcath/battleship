@@ -1,3 +1,3 @@
 import "./style.css";
+import ShipFactory from "./ships";
 
-export const sum = (a, b) => a + b;
