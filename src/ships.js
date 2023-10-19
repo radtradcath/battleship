@@ -8,8 +8,10 @@ const ShipFactory = (type) => {
   };
 
   const shipType = type;
+  const shipId = crypto.randomUUID();
 
   const getShipType = () => shipType;
+  const getShipId = () => shipId;
 
   const setShipLength = (name) => {
     const typesArray = Object.keys(typeSizes);
@@ -44,6 +46,7 @@ const ShipFactory = (type) => {
   return {
     getShipLength,
     getShipType,
+    getShipId,
     getHits,
     hit,
     isSunk,    

@@ -1,7 +1,15 @@
+const crypto = require('crypto');
+
 module.exports = {
-    moduleNameMapper: {
-      '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-        '/home/radtrad/repos/battleship/__mocks__/fileMock.js',
-      '\\.(css|less)$': '/home/radtrad/repos/battleship/__mocks__/styleMock.js',
-    },
-  };
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "/home/radtrad/repos/battleship/__mocks__/fileMock.js",
+    "\\.(css|less)$": "/home/radtrad/repos/battleship/__mocks__/styleMock.js",
+  },
+};
+
+Object.defineProperty(global, "crypto", {
+  value: {
+    randomUUID: () => crypto.randomUUID(),
+  },
+});
