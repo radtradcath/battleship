@@ -1,4 +1,11 @@
+import crypto from 'crypto'
 import ShipFactory from "./ships";
+
+Object.defineProperty(global, 'crypto', {
+  value: {
+    randomUUID: () => crypto.randomUUID(),
+  }
+});
 
 describe("ships tests", () => {
   const newShip = ShipFactory("carrier");
