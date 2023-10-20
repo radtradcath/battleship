@@ -1,6 +1,24 @@
 import ShipFactory from "./ships";
 
 const GameboardFactory = () => {
+  const carrier = ShipFactory("carrier"); // 5
+  const battleship = ShipFactory("battleship"); // 4
+  const cruiser = ShipFactory("cruiser"); // 3
+  const destroyer1 = ShipFactory("destroyer"); // 2
+  const destroyer2 = ShipFactory("destroyer"); // 2
+  const submarine1 = ShipFactory("submarine"); // 1
+  const submarine2 = ShipFactory("submarine"); // 1
+
+  const arrOfShips = [
+    carrier,
+    battleship,
+    cruiser,
+    destroyer1,
+    destroyer2,
+    submarine1,
+    submarine2,
+  ];
+
   const gameboard = [
     [
       undefined,
@@ -126,6 +144,8 @@ const GameboardFactory = () => {
 
   const getGameboard = () => gameboard;
 
+  const addNewShip = (ship) => arrOfShips.push(ship);
+
   const placeShip = (coord, orient, ship) => {
     const startingY = coord[0];
     const startingX = coord[1];
@@ -150,7 +170,7 @@ const GameboardFactory = () => {
       return gameboard;
     }
 
-    if (orient === 'vertical') {
+    if (orient === "vertical") {
       for (let i = 0; i < shipLength; i += 1) {
         necessaryPos.push(gameboard[startingY + i][startingX]);
       }
@@ -163,13 +183,44 @@ const GameboardFactory = () => {
         gameboard[startingY + i][startingX] = shipId;
       }
 
-       return gameboard;
+      return gameboard;
     }
+  };
+
+  const missedShots = [];
+
+  const getMissedShots = () => missedShots;
+  
+  const receiveAttack = (coord) => {
+    const coordY = coord[0];
+    const coordX = coord[1];
+
+    if (
+      gameboard[coordY][coordX] === "miss" ||
+      gameboard[coordY][coordX] === "hit"
+    ) {
+      return "Not available";
+    }
+
+    if (gameboard[coordY][coordX] === undefined) {
+      gameboard[coordY][coordX] = "miss";
+      missedShots.push(coord);
+      return missedShots;
+    }
+
+    const hitId = gameboard[coordY][coordX];
+    const targetShip = arrOfShips.find((ship) => ship.getShipId() === hitId);
+    targetShip.hit();
+    return targetShip;
+    // gameboard[coordY][coordX] = "hit";
   };
 
   return {
     placeShip,
     getGameboard,
+    getMissedShots,
+    receiveAttack,
+    addNewShip,
   };
 };
 
