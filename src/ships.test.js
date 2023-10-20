@@ -1,14 +1,18 @@
-import crypto from 'crypto'
+import crypto from "crypto";
 import ShipFactory from "./ships";
 
-Object.defineProperty(global, 'crypto', {
+Object.defineProperty(global, "crypto", {
   value: {
     randomUUID: () => crypto.randomUUID(),
-  }
+  },
 });
 
 describe("ships tests", () => {
-  const newShip = ShipFactory("carrier");
+  let newShip;
+
+  beforeEach(() => {
+    newShip = ShipFactory("carrier");
+  });
 
   test("get correct ship length", () => {
     expect(newShip.getShipLength()).toBe(5);
@@ -18,13 +22,13 @@ describe("ships tests", () => {
     expect(newShip.getShipType()).toBe("carrier");
   });
 
-  test('sink ship correctly', () => {
+  test("sink ship correctly", () => {
     newShip.hit();
     newShip.hit();
     newShip.hit();
     newShip.hit();
     newShip.hit();
-    
+
     expect(newShip.isSunk()).toBeTruthy();
-  })
+  });
 });
