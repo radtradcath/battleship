@@ -289,4 +289,11 @@ describe("test placement of ships", () => {
     board1.addNewShip(submarine);
     expect(board1.receiveAttack([1, 1])).toBe(submarine);
   });
+
+  test('board prevent from attacking unavailable spot', () => {
+    board1.placeShip([1, 1], "horizontal", submarine);
+    board1.addNewShip(submarine);
+    board1.receiveAttack([1, 1]);
+    expect(board1.receiveAttack([1, 1])).toBe('Not available')
+  })
 });

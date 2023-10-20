@@ -190,7 +190,7 @@ const GameboardFactory = () => {
   const missedShots = [];
 
   const getMissedShots = () => missedShots;
-  
+
   const receiveAttack = (coord) => {
     const coordY = coord[0];
     const coordX = coord[1];
@@ -211,6 +211,7 @@ const GameboardFactory = () => {
     const hitId = gameboard[coordY][coordX];
     const targetShip = arrOfShips.find((ship) => ship.getShipId() === hitId);
     targetShip.hit();
+    gameboard[coordY][coordX] = "hit";
     return targetShip;
     // gameboard[coordY][coordX] = "hit";
   };
