@@ -10,14 +10,18 @@ const GameboardFactory = () => {
   const submarine2 = ShipFactory("submarine"); // 1
 
   const arrOfShips = [
-    carrier,
-    battleship,
-    cruiser,
-    destroyer1,
-    destroyer2,
-    submarine1,
-    submarine2,
+    
   ];
+
+  let sunkShips = 0;
+
+  const isAllSunk = () => {
+    if (sunkShips === arrOfShips.length) {
+      return true;
+    }
+
+    return false;
+  }
 
   const gameboard = [
     [
@@ -144,13 +148,14 @@ const GameboardFactory = () => {
 
   const getGameboard = () => gameboard;
 
+  const getArrOfShips = () => arrOfShips;
+
   const addNewShip = (ship) => arrOfShips.push(ship);
 
   const placeShip = (coord, orient, ship) => {
     const startingY = coord[0];
     const startingX = coord[1];
     const shipLength = ship.getShipLength();
-    const shipId = ship.getShipId();
 
     const necessaryPos = [];
 
@@ -164,7 +169,7 @@ const GameboardFactory = () => {
       }
 
       for (let i = 0; i < shipLength; i += 1) {
-        gameboard[startingY][startingX + i] = shipId;
+        gameboard[startingY][startingX + i] = ship;
       }
 
       return gameboard;
@@ -180,7 +185,7 @@ const GameboardFactory = () => {
       }
 
       for (let i = 0; i < shipLength; i += 1) {
-        gameboard[startingY + i][startingX] = shipId;
+        gameboard[startingY + i][startingX] = ship;
       }
 
       return gameboard;
@@ -208,12 +213,13 @@ const GameboardFactory = () => {
       return missedShots;
     }
 
-    const hitId = gameboard[coordY][coordX];
-    const targetShip = arrOfShips.find((ship) => ship.getShipId() === hitId);
-    targetShip.hit();
+    const hitShip = gameboard[coordY][coordX];
+    hitShip.hit();
+    if (hitShip.isSunk()) {
+      sunkShips += 1;
+    }
     gameboard[coordY][coordX] = "hit";
-    return targetShip;
-    // gameboard[coordY][coordX] = "hit";
+    return hitShip;
   };
 
   return {
@@ -222,10 +228,9 @@ const GameboardFactory = () => {
     getMissedShots,
     receiveAttack,
     addNewShip,
+    getArrOfShips,
+    isAllSunk,
   };
 };
 
 export default GameboardFactory;
-// x, y
-// [0,0] --> [0][0]
-// [0,1] --> [0][1]

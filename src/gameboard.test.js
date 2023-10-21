@@ -39,11 +39,11 @@ describe("test placement of ships", () => {
       ],
       [
         undefined,
-        carrier.getShipId(),
-        carrier.getShipId(),
-        carrier.getShipId(),
-        carrier.getShipId(),
-        carrier.getShipId(),
+        carrier,
+        carrier,
+        carrier,
+        carrier,
+        carrier,
         undefined,
         undefined,
         undefined,
@@ -214,7 +214,7 @@ describe("test placement of ships", () => {
         undefined,
         undefined,
         undefined,
-        destroyer.getShipId(),
+        destroyer,
         undefined,
         undefined,
         undefined,
@@ -226,7 +226,7 @@ describe("test placement of ships", () => {
         undefined,
         undefined,
         undefined,
-        destroyer.getShipId(),
+        destroyer,
         undefined,
         undefined,
         undefined,
@@ -281,19 +281,44 @@ describe("test placement of ships", () => {
 
   test("board record missed shot", () => {
     board1.receiveAttack([1, 0]);
-    expect(board1.getMissedShots()).toEqual([[1, 0]]);
+    board1.receiveAttack([5, 5]);
+    expect(board1.getMissedShots()).toEqual([
+      [1, 0],
+      [5, 5],
+    ]);
   });
 
   test("board record attacked ship", () => {
-    board1.placeShip([1, 1], "horizontal", submarine);
     board1.addNewShip(submarine);
+    board1.placeShip([1, 1], "horizontal", submarine);
     expect(board1.receiveAttack([1, 1])).toBe(submarine);
   });
 
-  test('board prevent from attacking unavailable spot', () => {
-    board1.placeShip([1, 1], "horizontal", submarine);
+  test("board prevent from attacking unavailable spot", () => {
     board1.addNewShip(submarine);
+    board1.placeShip([1, 1], "horizontal", submarine);
     board1.receiveAttack([1, 1]);
-    expect(board1.receiveAttack([1, 1])).toBe('Not available')
-  })
+    expect(board1.receiveAttack([1, 1])).toBe("Not available");
+  });
+
+  test("attack successfully increase hits on ship", () => {
+    board1.addNewShip(submarine);
+    board1.placeShip([1, 1], "horizontal", submarine);
+    board1.receiveAttack([1, 1]);
+    expect(submarine.getHits()).toBe(1);
+  });
+
+  test("reference of ship knows it sunk", () => {
+    board1.addNewShip(submarine);
+    board1.placeShip([1, 1], "horizontal", submarine);
+    board1.receiveAttack([1, 1]);
+    expect(submarine.isSunk()).toBeTruthy();
+  });
+
+  test("board knows when all sunk", () => {
+    board1.addNewShip(submarine);
+    board1.placeShip([1, 1], "horizontal", submarine);
+    board1.receiveAttack([1, 1]);
+    expect(board1.isAllSunk()).toBeTruthy();
+  });
 });
