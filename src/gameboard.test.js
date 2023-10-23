@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import GameboardFactory from "./gameboard";
 import ShipFactory from "./ships";
+import PlayerFactory from "./players";
 
 Object.defineProperty(global, "crypto", {
   value: {
@@ -14,13 +15,14 @@ describe("test placement of ships", () => {
   let battleship;
   let submarine;
   let board1;
+  const player = PlayerFactory("Player")
 
   beforeEach(() => {
     carrier = ShipFactory("carrier"); // 5
     destroyer = ShipFactory("destroyer"); // 2
     battleship = ShipFactory("battleship"); // 4
     submarine = ShipFactory("submarine"); // 1
-    board1 = GameboardFactory();
+    board1 = GameboardFactory(player.getName());
   });
 
   test("correctly position ship horizontaly", () => {

@@ -1,17 +1,7 @@
 import ShipFactory from "./ships";
 
-const GameboardFactory = () => {
-  const carrier = ShipFactory("carrier"); // 5
-  const battleship = ShipFactory("battleship"); // 4
-  const cruiser = ShipFactory("cruiser"); // 3
-  const destroyer1 = ShipFactory("destroyer"); // 2
-  const destroyer2 = ShipFactory("destroyer"); // 2
-  const submarine1 = ShipFactory("submarine"); // 1
-  const submarine2 = ShipFactory("submarine"); // 1
-
-  const arrOfShips = [
-    
-  ];
+const GameboardFactory = (player) => {
+  const arrOfShips = [];
 
   let sunkShips = 0;
 
@@ -21,7 +11,7 @@ const GameboardFactory = () => {
     }
 
     return false;
-  }
+  };
 
   const gameboard = [
     [
@@ -192,6 +182,36 @@ const GameboardFactory = () => {
     }
   };
 
+  const returnRandomCoord = () => Math.floor(Math.random() * 10);
+
+  const returnRandomOrient = () => {
+    const randomOrient = Math.floor(Math.random() * 2);
+    if (randomOrient === 0) {
+      return "vertical";
+    }
+    if (randomOrient === 1) {
+      return "horizontal";
+    }
+  };
+
+  const findRandomAvailablePos = (ship) => {
+    const shipLength = ship.getShipLength();
+    let randomPos;
+    const randomOrient = returnRandomOrient();
+    
+    do {
+      randomPos = [returnRandomCoord(), returnRandomCoord()];
+    } while (randomPos[0] + shipLength > 9 || randomPos[1] + shipLength > 9);
+
+    if (
+      placeShip(randomPos, randomOrient, ship) === "Obstructed by another ship."
+    ) {
+      return findRandomAvailablePos(ship);
+    }
+
+    placeShip(randomPos, randomOrient, ship);
+  };
+
   const missedShots = [];
 
   const getMissedShots = () => missedShots;
@@ -222,15 +242,30 @@ const GameboardFactory = () => {
     return hitShip;
   };
 
-  return {
-    placeShip,
-    getGameboard,
-    getMissedShots,
-    receiveAttack,
-    addNewShip,
-    getArrOfShips,
-    isAllSunk,
-  };
+  if (player === "Player") {
+    return {
+      placeShip,
+      getGameboard,
+      getMissedShots,
+      receiveAttack,
+      addNewShip,
+      getArrOfShips,
+      isAllSunk,
+    };
+  }
+
+  if (player === "Computer") {
+    return {
+      placeShip,
+      getGameboard,
+      getMissedShots,
+      receiveAttack,
+      addNewShip,
+      getArrOfShips,
+      isAllSunk,
+      findRandomAvailablePos,
+    };
+  }
 };
 
 export default GameboardFactory;
