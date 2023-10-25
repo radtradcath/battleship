@@ -48,35 +48,14 @@ body {
   border: 1px solid red;
 }
 
-
-
-
-
-
-/* .ships-container {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-} */
-
-/* .carrier,
-.battleship,
-.cruiser,
-.destroyer1,
-.destroyer2,
-.submarine1,
-.submarine2 {
-  display: flex;
+.resetBtn {
+  padding: 12px 30px;
+  background-color: antiquewhite;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
-.carrier > div,
-.battleship > div,
-.cruiser > div,
-.destroyer1 > div,
-.destroyer2 > div,
-.submarine1 > div,
-.submarine2 > div {
-  width: 50px;
-  height: 50px;
-  border: 1px solid blue;
-} */
+.winner {
+  font-size: 2em;
+  padding-bottom: 40px;
+}

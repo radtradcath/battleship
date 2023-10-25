@@ -28,7 +28,7 @@ const PlayerFactory = (name) => {
       isIncluded([x, y], board.getMissedShots()) ||
       isIncluded([x, y], board.getHitShots())
     );
-      console.log([x, y])
+      
     return [x, y];
   };
 

@@ -5,8 +5,14 @@ import { BoardHandler, dom } from "./gamelogic";
 const boardHandler = BoardHandler();
 
 const computerBoardCells = document.querySelectorAll(".computer-board-cell");
+const body = document.querySelector("body");
 
 const attack = (e) => {
+  if (e.target.classList[2] === "true") {
+    return;
+  }
+  console.log("reclick");
+  e.target.classList.add("true");
   const cellPos = e.target.classList[1];
   const splitPos = cellPos.split(",");
   splitPos[0] = Number(splitPos[0]);
@@ -18,7 +24,29 @@ const attack = (e) => {
     boardHandler.getComputerBoard(),
   );
 
-  const endGame = (winner) => {};
+  const resetGame = () => {
+    
+  }
+
+  const endGame = (winner) => {
+    const resetButton = document.createElement("button");
+    const winnerContainer = document.createElement("div");
+
+    resetButton.classList.add("resetBtn");
+    winnerContainer.classList.add("winner");
+
+    resetButton.textContent = "RESET";
+    winnerContainer.textContent = `${winner} is the Winner!`;
+
+    body.appendChild(resetButton);
+    body.appendChild(winnerContainer);
+
+    computerBoardCells.forEach((cell) => {
+      cell.removeEventListener("click", attack);
+    });
+
+    resetButton.addEventListener('click', resetGame)
+  };
 
   // If all computer ships sunk, end game
   if (boardHandler.getComputerBoard().isAllSunk()) {
