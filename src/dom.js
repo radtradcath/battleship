@@ -44,7 +44,7 @@ const DOMGameboardHandler = () => {
           cell.classList.add(
             `${board.getGameboard()[splitPos[0]][splitPos[1]].getShipId()}`,
           );
-          cell.style.border = '6px solid red'
+          cell.style.border = '6px solid green'
         }
       });
     }
