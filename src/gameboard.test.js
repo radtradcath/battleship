@@ -293,7 +293,7 @@ describe("test placement of ships", () => {
   test("board record attacked ship", () => {
     board1.addNewShip(submarine);
     board1.placeShip([1, 1], "horizontal", submarine);
-    expect(board1.receiveAttack([1, 1])).toBe(submarine);
+    expect(board1.receiveAttack([1, 1])).toBe(submarine.getShipId());
   });
 
   test("board prevent from attacking unavailable spot", () => {

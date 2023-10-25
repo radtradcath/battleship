@@ -1,59 +1,45 @@
 import "./style.css";
-import ShipFactory from "./ships";
-import PlayerFactory from "./players";
-import GameboardFactory from "./gameboard";
-import { placeShipsInBoard } from "./dom";
+import { BoardHandler, dom } from "./gamelogic";
 
-const player = (() => PlayerFactory("Player"))();
-const computer = (() => PlayerFactory("Computer"))();
+// Initialize players, create boards and position ships
+const boardHandler = BoardHandler();
 
-const playerBoard = (() => {
-  const playerGameboard = GameboardFactory(player.getName());
+const computerBoardCells = document.querySelectorAll(".computer-board-cell");
 
-  const carrier = ShipFactory("carrier"); // 5
-  const battleship = ShipFactory("battleship"); // 4
-  const cruiser = ShipFactory("cruiser"); // 3
-  const destroyer1 = ShipFactory("destroyer"); // 2
-  const destroyer2 = ShipFactory("destroyer"); // 2
-  const submarine1 = ShipFactory("submarine"); // 1
-  const submarine2 = ShipFactory("submarine"); // 1
+const attack = (e) => {
+  const cellPos = e.target.classList[1];
+  const splitPos = cellPos.split(",");
+  splitPos[0] = Number(splitPos[0]);
+  splitPos[1] = Number(splitPos[1]);
+  boardHandler.getComputerBoard().receiveAttack(splitPos);
 
-  playerGameboard.placeShip([0, 0], "horizontal", carrier);
-  playerGameboard.placeShip([2, 2], "vertical", battleship);
-  playerGameboard.placeShip([0, 6], "vertical", cruiser);
-  playerGameboard.placeShip([4, 7], "horizontal", destroyer1);
-  playerGameboard.placeShip([8, 6], "horizontal", destroyer2);
-  playerGameboard.placeShip([9, 3], "horizontal", submarine1);
-  playerGameboard.placeShip([3, 9], "horizontal", submarine2);
+  dom.updateRenderBoard(
+    boardHandler.getPlayerBoard(),
+    boardHandler.getComputerBoard(),
+  );
 
-  return playerGameboard;
-})();
+  const endGame = (winner) => {};
 
-const computerBoard = (() => {
-  const computerGameboard = GameboardFactory(computer.getName());
+  // If all computer ships sunk, end game
+  if (boardHandler.getComputerBoard().isAllSunk()) {
+    endGame("Player");
+  }
 
-  const carrier = ShipFactory("carrier"); // 5
-  const battleship = ShipFactory("battleship"); // 4
-  const cruiser = ShipFactory("cruiser"); // 3
-  const destroyer1 = ShipFactory("destroyer"); // 2
-  const destroyer2 = ShipFactory("destroyer"); // 2
-  const submarine1 = ShipFactory("submarine"); // 1
-  const submarine2 = ShipFactory("submarine"); // 1
+  // Else, computer attack
+  boardHandler
+    .getPlayerBoard()
+    .receiveAttack(
+      boardHandler.computer.chooseAttackCell(boardHandler.getPlayerBoard()),
+    );
 
-  computerGameboard.addNewShip(carrier);
-  computerGameboard.addNewShip(battleship);
-  computerGameboard.addNewShip(cruiser);
-  computerGameboard.addNewShip(destroyer1);
-  computerGameboard.addNewShip(destroyer2);
-  computerGameboard.addNewShip(submarine1);
-  computerGameboard.addNewShip(submarine2);
+  // Update boards
+  dom.updateRenderBoard(
+    boardHandler.getPlayerBoard(),
+    boardHandler.getComputerBoard(),
+  );
+};
 
-  computerGameboard.getArrOfShips().forEach((ship) => {
-    computerGameboard.findRandomAvailablePos(ship);
-  });
-
-  return computerGameboard;
-})();
-
-placeShipsInBoard(playerBoard, player);
-placeShipsInBoard(computerBoard, computer);
+// Attach click event to each computer board cell
+computerBoardCells.forEach((cell) => {
+  cell.addEventListener("click", attack);
+});

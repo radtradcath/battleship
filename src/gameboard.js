@@ -198,10 +198,10 @@ const GameboardFactory = (player) => {
     const shipLength = ship.getShipLength();
     let randomPos;
     const randomOrient = returnRandomOrient();
-    
+
     do {
       randomPos = [returnRandomCoord(), returnRandomCoord()];
-    } while (randomPos[0] + shipLength > 9 || randomPos[1] + shipLength > 9);
+    } while (randomPos[0] + shipLength > 10 || randomPos[1] + shipLength > 10);
 
     if (
       placeShip(randomPos, randomOrient, ship) === "Obstructed by another ship."
@@ -213,8 +213,10 @@ const GameboardFactory = (player) => {
   };
 
   const missedShots = [];
+  const hitShots = []
 
   const getMissedShots = () => missedShots;
+  const getHitShots = () => hitShots;
 
   const receiveAttack = (coord) => {
     const coordY = coord[0];
@@ -224,12 +226,14 @@ const GameboardFactory = (player) => {
       gameboard[coordY][coordX] === "miss" ||
       gameboard[coordY][coordX] === "hit"
     ) {
+      console.log('a')
       return "Not available";
     }
 
     if (gameboard[coordY][coordX] === undefined) {
       gameboard[coordY][coordX] = "miss";
       missedShots.push(coord);
+      console.log('b')
       return missedShots;
     }
 
@@ -239,7 +243,9 @@ const GameboardFactory = (player) => {
       sunkShips += 1;
     }
     gameboard[coordY][coordX] = "hit";
-    return hitShip;
+    hitShots.push(coord);
+    console.log(hitShip)
+    return hitShip.getShipId();
   };
 
   if (player === "Player") {
@@ -251,6 +257,7 @@ const GameboardFactory = (player) => {
       addNewShip,
       getArrOfShips,
       isAllSunk,
+      getHitShots,
     };
   }
 
@@ -264,6 +271,7 @@ const GameboardFactory = (player) => {
       getArrOfShips,
       isAllSunk,
       findRandomAvailablePos,
+      getHitShots,
     };
   }
 };
