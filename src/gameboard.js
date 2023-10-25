@@ -213,7 +213,7 @@ const GameboardFactory = (player) => {
   };
 
   const missedShots = [];
-  const hitShots = []
+  const hitShots = [];
 
   const getMissedShots = () => missedShots;
   const getHitShots = () => hitShots;
@@ -226,14 +226,13 @@ const GameboardFactory = (player) => {
       gameboard[coordY][coordX] === "miss" ||
       gameboard[coordY][coordX] === "hit"
     ) {
-      console.log('a')
       return "Not available";
     }
 
     if (gameboard[coordY][coordX] === undefined) {
       gameboard[coordY][coordX] = "miss";
       missedShots.push(coord);
-      console.log('b')
+
       return missedShots;
     }
 
@@ -244,7 +243,7 @@ const GameboardFactory = (player) => {
     }
     gameboard[coordY][coordX] = "hit";
     hitShots.push(coord);
-    console.log(hitShip)
+
     return hitShip.getShipId();
   };
 

@@ -25,10 +25,10 @@ const PlayerFactory = (name) => {
       x = Math.floor(Math.random() * 10);
       y = Math.floor(Math.random() * 10);
     } while (
-      isIncluded([x, y], board.getMissedShots()) &&
+      isIncluded([x, y], board.getMissedShots()) ||
       isIncluded([x, y], board.getHitShots())
     );
-
+      console.log([x, y])
     return [x, y];
   };
 
