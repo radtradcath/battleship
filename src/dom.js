@@ -41,11 +41,10 @@ const DOMGameboardHandler = () => {
         splitPos[1] = Number(splitPos[1]);
 
         if (board.getGameboard()[splitPos[0]][splitPos[1]] !== undefined) {
-          cell.style.backgroundColor = "green";
-          cell.setAttribute(
-            "id",
-            board.getGameboard()[splitPos[0]][splitPos[1]].getShipId(),
+          cell.classList.add(
+            `${board.getGameboard()[splitPos[0]][splitPos[1]].getShipId()}`,
           );
+          cell.style.border = '6px solid red'
         }
       });
     }
@@ -58,10 +57,8 @@ const DOMGameboardHandler = () => {
         splitPos[1] = Number(splitPos[1]);
 
         if (board.getGameboard()[splitPos[0]][splitPos[1]] !== undefined) {
-          cell.style.backgroundColor = "green";
-          cell.setAttribute(
-            "id",
-            board.getGameboard()[splitPos[0]][splitPos[1]].getShipId(),
+          cell.classList.add(
+            `${board.getGameboard()[splitPos[0]][splitPos[1]].getShipId()}`,
           );
         }
       });
@@ -81,7 +78,7 @@ const DOMGameboardHandler = () => {
       }
 
       if (board1.getGameboard()[splitPos[0]][splitPos[1]] === "hit") {
-        cell.style.backgroundColor = "red";
+        cell.style.border = '6px solid red'
       }
     });
 
@@ -96,13 +93,14 @@ const DOMGameboardHandler = () => {
       }
 
       if (board2.getGameboard()[splitPos[0]][splitPos[1]] === "hit") {
-        cell.style.backgroundColor = "red";
+        cell.style.border = '6px solid red'
       }
     });
   };
   return {
-    placeShipsInBoard, updateRenderBoard
-  }
+    placeShipsInBoard,
+    updateRenderBoard,
+  };
 };
 
 export default DOMGameboardHandler;

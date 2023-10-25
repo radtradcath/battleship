@@ -1,9 +1,6 @@
 import ShipFactory from "./ships";
 import PlayerFactory from "./players";
 import GameboardFactory from "./gameboard";
-import DOMGameboardHandler from "./dom";
-
-const dom = DOMGameboardHandler();
 
 const BoardHandler = () => {
   // Create Players
@@ -21,6 +18,14 @@ const BoardHandler = () => {
     const destroyer2 = ShipFactory("destroyer"); // 2
     const submarine1 = ShipFactory("submarine"); // 1
     const submarine2 = ShipFactory("submarine"); // 1
+
+    playerGameboard.addNewShip(carrier);
+    playerGameboard.addNewShip(battleship);
+    playerGameboard.addNewShip(cruiser);
+    playerGameboard.addNewShip(destroyer1);
+    playerGameboard.addNewShip(destroyer2);
+    playerGameboard.addNewShip(submarine1);
+    playerGameboard.addNewShip(submarine2);
 
     playerGameboard.placeShip([0, 0], "horizontal", carrier);
     playerGameboard.placeShip([2, 2], "vertical", battleship);
@@ -60,20 +65,17 @@ const BoardHandler = () => {
     return computerGameboard;
   })();
 
-  const getComputerBoard = () => computerBoard
-  const getPlayerBoard = () => playerBoard
+  const getComputerBoard = () => computerBoard;
+  const getPlayerBoard = () => playerBoard;
 
-  // Call to link gameboard to board cells
-  dom.placeShipsInBoard(playerBoard, player);
-  dom.placeShipsInBoard(computerBoard, computer);
-
-  
   return {
     getComputerBoard,
     getPlayerBoard,
     player,
-    computer
-  }
+    computer,
+    playerBoard,
+    computerBoard,
+  };
 };
 
-export { BoardHandler, dom };
+export default BoardHandler;

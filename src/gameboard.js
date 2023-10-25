@@ -238,10 +238,11 @@ const GameboardFactory = (player) => {
 
     const hitShip = gameboard[coordY][coordX];
     hitShip.hit();
+    gameboard[coordY][coordX] = "hit";
     if (hitShip.isSunk()) {
       sunkShips += 1;
     }
-    gameboard[coordY][coordX] = "hit";
+
     hitShots.push(coord);
 
     return hitShip.getShipId();

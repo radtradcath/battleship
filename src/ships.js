@@ -37,6 +37,7 @@ const ShipFactory = (type) => {
 
   const isSunk = () => {
     if (getHits() === shipLength) {
+      console.log('jaevis')
       return true;
     }
 
