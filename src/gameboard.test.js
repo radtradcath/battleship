@@ -276,9 +276,7 @@ describe("test placement of ships", () => {
 
   test("block overlapping ships", () => {
     board1.placeShip([5, 4], "vertical", destroyer);
-    expect(board1.placeShip([5, 4], "vertical", battleship)).toBe(
-      "Obstructed by another ship.",
-    );
+    expect(board1.placeShip([5, 4], "vertical", battleship)).toBeFalsy()
   });
 
   test("board record missed shot", () => {

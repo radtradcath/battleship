@@ -2,6 +2,7 @@ import ShipFactory from "./ships";
 import PlayerFactory from "./players";
 import GameboardFactory from "./gameboard";
 
+
 const BoardHandler = () => {
   // Create Players
   const player = (() => PlayerFactory("Player"))();
@@ -19,6 +20,7 @@ const BoardHandler = () => {
     const submarine1 = ShipFactory("submarine"); // 1
     const submarine2 = ShipFactory("submarine"); // 1
 
+
     playerGameboard.addNewShip(carrier);
     playerGameboard.addNewShip(battleship);
     playerGameboard.addNewShip(cruiser);
@@ -27,13 +29,13 @@ const BoardHandler = () => {
     playerGameboard.addNewShip(submarine1);
     playerGameboard.addNewShip(submarine2);
 
-    playerGameboard.placeShip([0, 0], "horizontal", carrier);
-    playerGameboard.placeShip([2, 2], "vertical", battleship);
-    playerGameboard.placeShip([0, 6], "vertical", cruiser);
-    playerGameboard.placeShip([4, 7], "horizontal", destroyer1);
-    playerGameboard.placeShip([8, 6], "horizontal", destroyer2);
-    playerGameboard.placeShip([9, 3], "horizontal", submarine1);
-    playerGameboard.placeShip([3, 9], "horizontal", submarine2);
+    // playerGameboard.placeShip([0, 0], "horizontal", carrier);
+    // playerGameboard.placeShip([2, 2], "vertical", battleship);
+    // playerGameboard.placeShip([0, 6], "vertical", cruiser);
+    // playerGameboard.placeShip([4, 7], "horizontal", destroyer1);
+    // playerGameboard.placeShip([8, 6], "horizontal", destroyer2);
+    // playerGameboard.placeShip([9, 3], "horizontal", submarine1);
+    // playerGameboard.placeShip([3, 9], "horizontal", submarine2);
 
     return playerGameboard;
   })();

@@ -1,10 +1,19 @@
 const DOMGameboardHandler = () => {
+  const orientationBtn = document.querySelector(".orientation");
+
   const playerBoardContainer = document.querySelector(
     ".player-board-container",
   );
   const computerBoardContainer = document.querySelector(
     ".computer-board-container",
   );
+
+  orientationBtn.addEventListener("click", () => {
+    orientationBtn.textContent =
+      orientationBtn.textContent === "horizontal"
+        ? (orientationBtn.textContent = "vertical")
+        : (orientationBtn.textContent = "horizontal");
+  });
 
   // Render player board
   const renderPlayerGameboard = (() => {
@@ -44,7 +53,7 @@ const DOMGameboardHandler = () => {
           cell.classList.add(
             `${board.getGameboard()[splitPos[0]][splitPos[1]].getShipId()}`,
           );
-          cell.style.border = '6px solid green'
+          cell.style.border = "6px solid azure";
         }
       });
     }
@@ -78,7 +87,7 @@ const DOMGameboardHandler = () => {
       }
 
       if (board1.getGameboard()[splitPos[0]][splitPos[1]] === "hit") {
-        cell.style.border = '6px solid red'
+        cell.style.border = "6px solid red";
       }
     });
 
@@ -93,7 +102,7 @@ const DOMGameboardHandler = () => {
       }
 
       if (board2.getGameboard()[splitPos[0]][splitPos[1]] === "hit") {
-        cell.style.border = '6px solid red'
+        cell.style.border = "6px solid red";
       }
     });
   };

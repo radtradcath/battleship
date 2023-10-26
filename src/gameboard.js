@@ -150,12 +150,15 @@ const GameboardFactory = (player) => {
     const necessaryPos = [];
 
     if (orient === "horizontal") {
+      if (startingX + shipLength > 10) {
+        return false;
+      }
       for (let i = 0; i < shipLength; i += 1) {
         necessaryPos.push(gameboard[startingY][startingX + i]);
       }
 
       if (!necessaryPos.every((value) => value === undefined)) {
-        return "Obstructed by another ship.";
+        return false;
       }
 
       for (let i = 0; i < shipLength; i += 1) {
@@ -166,12 +169,15 @@ const GameboardFactory = (player) => {
     }
 
     if (orient === "vertical") {
+      if (startingY + shipLength > 10) {
+        return false;
+      }
       for (let i = 0; i < shipLength; i += 1) {
         necessaryPos.push(gameboard[startingY + i][startingX]);
       }
 
       if (!necessaryPos.every((value) => value === undefined)) {
-        return "Obstructed by another ship.";
+        return false;
       }
 
       for (let i = 0; i < shipLength; i += 1) {
@@ -203,9 +209,7 @@ const GameboardFactory = (player) => {
       randomPos = [returnRandomCoord(), returnRandomCoord()];
     } while (randomPos[0] + shipLength > 10 || randomPos[1] + shipLength > 10);
 
-    if (
-      placeShip(randomPos, randomOrient, ship) === "Obstructed by another ship."
-    ) {
+    if (placeShip(randomPos, randomOrient, ship) === false) {
       return findRandomAvailablePos(ship);
     }
 
